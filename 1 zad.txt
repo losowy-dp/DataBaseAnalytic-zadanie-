@@ -1,0 +1,16 @@
+SELECT data.part_number,
+ data.manufacturer,
+ data.category,
+ data.origin,
+ price.price,
+ deposit.deposit,
+ cast(price.price+deposit.deposit as decimal(10,2)),
+ quantity.quantity 
+FROM data 
+JOIN price ON data.part_number = price.part_number 
+JOIN deposit ON data.part_number = deposit.part_number 
+JOIN quantity ON data.part_number = quantity.part_number 
+WHERE quantity.quantity NOT LIKE '0' 
+AND price.price > 2.0 
+AND (quantity.warehouse LIKE 'A' OR quantity.warehouse LIKE 'H' OR quantity.warehouse LIKE 'J' OR quantity.warehouse LIKE '3' OR quantity.warehouse LIKE '9') 
+ORDER BY quantity.warehouse asc 
